@@ -29,7 +29,7 @@ const AppRow = styled.div<{ flex: number }>`
 
 const defaultOptions: Settings = {
   chance: 50,
-  delay: 30,
+  delay: 5,
   multiple: false,
 };
 
