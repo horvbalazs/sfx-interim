@@ -1,4 +1,4 @@
-import { Divider } from 'rsuite';
+import { Divider, Toggle } from 'rsuite';
 import styled from 'styled-components';
 import { Settings } from '../../types';
 import Card from '../common/Card';
@@ -11,6 +11,11 @@ const WarningLabel = styled.div`
   height: 20px;
 `;
 
+const ToggleWrapper = styled.div`
+  margin-top: 20px;
+  padding-left: 30px;
+`;
+
 interface OptionsProps {
   onSetOptions: (options: Settings) => void;
   value: Settings;
@@ -21,6 +26,10 @@ const Options = ({ onSetOptions, value }: OptionsProps) => {
     if (Object.hasOwn(value, settingLabel)) {
       onSetOptions({ ...value, [settingLabel]: newValue });
     }
+  };
+
+  const handleMultipleChecked = (checked: boolean) => {
+    onSetOptions({ ...value, multiple: checked });
   };
 
   return (
@@ -43,6 +52,15 @@ const Options = ({ onSetOptions, value }: OptionsProps) => {
         max={60}
         step={1}
       />
+      <ToggleWrapper>
+        <Toggle
+          checked={value.multiple}
+          onChange={handleMultipleChecked}
+          checkedChildren="Multi"
+          unCheckedChildren="Single"
+          disabled
+        />
+      </ToggleWrapper>
     </Card>
   );
 };

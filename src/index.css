@@ -21,6 +21,14 @@ body {
   --rs-slider-thumb-border: var(--font);
   --rs-slider-bar: var(--background);
   --rs-slider-hover-bar: var(--background);
+  --rs-toggle-thumb: var(--font);
+  --rs-toggle-bg: var(--background);
+  --rs-toggle-hover-bg: var(--background);
+  --rs-toggle-checked-thumb: var(--background);
+  --rs-toggle-checked-bg: var(--font);
+  --rs-toggle-checked-hover-bg: var(--font);
+  --rs-toggle-disabled-thumb: var(--font);
+  --rs-toggle-disabled-bg: var(--background);
 }
 
 code {
