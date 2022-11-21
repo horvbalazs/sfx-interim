@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useRef, useState, memo } from 'react';
-import { CheckTree, CheckTreePicker, Divider, Input, Loader } from 'rsuite';
+import { CheckTreePicker, Divider, Loader } from 'rsuite';
 import Player from '../common/Player';
 import { TreeNode } from '../../types';
 import { createSoundTree, getUncheckableNodes } from '../../helpers';
