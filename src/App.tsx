@@ -28,8 +28,8 @@ const AppRow = styled.div<{ flex: number }>`
 `;
 
 const defaultOptions: Settings = {
-  chance: 1,
-  delay: 1,
+  chance: 50,
+  delay: 30,
   multiple: false,
 };
 

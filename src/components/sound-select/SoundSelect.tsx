@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useRef, useState, memo } from 'react';
-import { CheckTree, Divider, Loader } from 'rsuite';
+import { CheckTree, CheckTreePicker, Divider, Input, Loader } from 'rsuite';
 import Player from '../common/Player';
 import { TreeNode } from '../../types';
 import { createSoundTree, getUncheckableNodes } from '../../helpers';
@@ -11,6 +11,11 @@ const LoaderContainer = styled.div`
   width: 100%;
   text-align: center;
   padding-top: 30px;
+`;
+
+const SelectContainer = styled.div`
+  margin: 10px 0;
+  padding: 0 15px;
 `;
 
 interface SoundSelectProps {
@@ -66,14 +71,17 @@ const SoundSelect = (props: SoundSelectProps) => {
         <h3>Select sounds</h3>
       </Divider>
       {soundTree && !isLoading && (
-        <CheckTree
-          value={selected}
-          uncheckableItemValues={uncheckable}
-          data={soundTree}
-          renderTreeNode={handleRenderTreeNode}
-          onChange={handleSelectedChanged}
-          preventOverflow={true}
-        />
+        <SelectContainer>
+          <CheckTreePicker
+            value={selected}
+            uncheckableItemValues={uncheckable}
+            data={soundTree}
+            renderTreeNode={handleRenderTreeNode}
+            onChange={handleSelectedChanged}
+            open
+            block
+          />
+        </SelectContainer>
       )}
       {isLoading && (
         <LoaderContainer>

@@ -8,6 +8,11 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  --rs-text-primary: var(--font);
+  --rs-input-bg: var(--card-background);
+  --rs-input-focus-border: var(--background);
+  --rs-color-focus-ring: none;
+  --rs-border-primary: var(--background);
   --rs-divider-border: var(--font);
   --rs-bg-overlay: var(--card-background);
   --rs-listbox-option-hover-bg: none;
@@ -29,6 +34,7 @@ body {
   --rs-toggle-checked-hover-bg: var(--font);
   --rs-toggle-disabled-thumb: var(--font);
   --rs-toggle-disabled-bg: var(--background);
+  --rs-shadow-overlay: none;
 }
 
 code {
@@ -41,4 +47,8 @@ code {
   .rs-checkbox-checker
   > label {
   font-weight: unset;
+}
+
+.rs-picker-default .rs-picker-toggle.rs-btn {
+  display: none !important;
 }
