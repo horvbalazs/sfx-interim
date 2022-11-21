@@ -1,31 +1,39 @@
-import { ReactNode, useEffect, useRef, useState } from 'react';
-import { CheckTree } from 'rsuite';
+import { ReactNode, useEffect, useRef, useState, memo } from 'react';
+import { CheckTree, Divider, Loader } from 'rsuite';
 import Player from '../common/Player';
-import 'rsuite/dist/rsuite.min.css';
-import styled from 'styled-components';
 import { TreeNode } from '../../types';
-import { createSoundTree, fetchTreeNode } from '../../helpers';
+import { createSoundTree, getUncheckableNodes } from '../../helpers';
 import SoundItem from './SoundItem';
+import Card from '../common/Card';
+import styled from 'styled-components';
+
+const LoaderContainer = styled.div`
+  width: 100%;
+  text-align: center;
+  padding-top: 30px;
+`;
 
 interface SoundSelectProps {
   setSelectedSounds: (selectedSounds: string[]) => void;
 }
 
-const SelectContainer = styled.div`
-  text-align: left;
-`;
-
 const SoundSelect = (props: SoundSelectProps) => {
   const [soundTree, setSoundTree] = useState<TreeNode[] | undefined>();
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useState<string[]>([]);
+  const [uncheckable, setUncheckable] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const playerRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
     createSoundTree()
       .then((result) => {
         setSoundTree(result);
+        setUncheckable(getUncheckableNodes(result));
       })
-      .catch(console.error);
+      .catch(console.error)
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, []);
 
   const handlePlaySample = (url: string) => {
@@ -35,9 +43,9 @@ const SoundSelect = (props: SoundSelectProps) => {
     }
   };
 
-  const handleSelectedChanged = (value: any) => {
-    setSelected(value);
-    props.setSelectedSounds(value);
+  const handleSelectedChanged = (value: unknown) => {
+    setSelected(value as string[]);
+    props.setSelectedSounds(value as string[]);
   };
 
   const handleRenderTreeNode = (node: unknown): ReactNode => {
@@ -53,20 +61,28 @@ const SoundSelect = (props: SoundSelectProps) => {
   };
 
   return (
-    <SelectContainer>
-      {soundTree && (
+    <Card>
+      <Divider>
+        <h3>Select sounds</h3>
+      </Divider>
+      {soundTree && !isLoading && (
         <CheckTree
           value={selected}
-          onChange={handleSelectedChanged}
+          uncheckableItemValues={uncheckable}
           data={soundTree}
-          defaultExpandAll
-          getChildren={fetchTreeNode}
           renderTreeNode={handleRenderTreeNode}
+          onChange={handleSelectedChanged}
+          preventOverflow={true}
         />
       )}
+      {isLoading && (
+        <LoaderContainer>
+          <Loader size="lg" speed="slow" />
+        </LoaderContainer>
+      )}
       <Player ref={playerRef}></Player>
-    </SelectContainer>
+    </Card>
   );
 };
 
-export default SoundSelect;
+export default memo(SoundSelect);

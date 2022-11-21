@@ -1,0 +1,11 @@
+:root {
+  --red: #ef476f;
+  --yellow: #ffd166;
+  --green: #06d6a0;
+  --light-blue: #118ab2;
+  --dark-blue: #073b4c;
+
+  --background: var(--light-blue);
+  --card-background: var(--dark-blue);
+  --font: var(--yellow);
+}
